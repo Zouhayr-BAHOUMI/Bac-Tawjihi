@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tawjih.enums.Province;
 import tawjih.enums.Region;
+import tawjih.enums.Ville;
 
 @Data
 @NoArgsConstructor
@@ -24,4 +25,7 @@ public class Adresse {
 
     @Enumerated(EnumType.STRING)
     private Province province;
+
+    @Enumerated(EnumType.STRING)
+    private Ville ville;
 }
