@@ -4,6 +4,7 @@ package tawjih.service.implimentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tawjih.exception.UniversiteNotFoundException;
+import tawjih.model.Adresse;
 import tawjih.model.Universite;
 import tawjih.repository.UniversiteRepository;
 
@@ -33,14 +34,26 @@ public class UniversiteService {
         return universite;
     }
 
-    public void updateUniversite(Long idUniversite, Universite universite) {
-        universiteRepository
+    public void updateUniversite(Long idUniversite, Universite universiteUpdate) {
+        Universite existUniversite = universiteRepository
                 .findById(idUniversite)
                 .orElseThrow(UniversiteNotFoundException::new);
 
-        universite.setId(idUniversite);
+        existUniversite.setNomUniversite(universiteUpdate.getNomUniversite());
+        existUniversite.setImageUrl(universiteUpdate.getImageUrl());
 
-        universiteRepository.save(universite);
+        Adresse existAdresse = existUniversite.getAdresse();
+        Adresse newAdresse = universiteUpdate.getAdresse();
+
+        if (existAdresse != null && newAdresse != null) {
+            existAdresse.setRegion(newAdresse.getRegion());
+            existAdresse.setProvince(newAdresse.getProvince());
+            existAdresse.setVille(newAdresse.getVille());
+        } else if (newAdresse != null) {
+            existUniversite.setAdresse(newAdresse);
+        }
+
+        universiteRepository.save(existUniversite);
     }
 
     public void deleteUniversite(Long idUniversite){
