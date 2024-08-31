@@ -3,7 +3,10 @@ package tawjih.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import tawjih.dto.AdresseDto;
 import tawjih.dto.UniversiteDto;
+import tawjih.model.Adresse;
 import tawjih.model.Universite;
 
 import java.util.List;
@@ -11,15 +14,19 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UniversiteMapper {
 
-    @Mapping(target = "region", source = "adresse.region")
-    @Mapping(target = "province", source = "adresse.province")
-    @Mapping(target = "ville", source = "adresse.ville")
+    @Mappings({
+            @Mapping(source = "universite.adresse", target = "adresse")
+    })
     UniversiteDto toDTO(Universite universite);
 
-    @Mapping(target = "adresse.region", source = "region")
-    @Mapping(target = "adresse.province", source = "province")
-    @Mapping(target = "adresse.ville", source = "ville")
+    @Mappings({
+            @Mapping(source = "universiteDTO.adresse", target = "adresse")
+    })
     Universite toEntity(UniversiteDto universiteDTO);
+
+    AdresseDto adresseToDTO(Adresse adresse);
+
+    Adresse dtoToAdresse(AdresseDto adresseDTO);
 
     List<UniversiteDto> toDTOList(List<Universite> universites);
     List<Universite> toEntityList(List<UniversiteDto> universiteDTOs);
