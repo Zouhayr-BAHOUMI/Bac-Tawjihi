@@ -9,6 +9,8 @@ import tawjih.enums.Province;
 import tawjih.enums.Region;
 import tawjih.enums.Ville;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +30,7 @@ public class Adresse {
 
     @Enumerated(EnumType.STRING)
     private Ville ville;
+
+    @OneToMany(mappedBy = "adresse")
+    private List<Etablissement> etablissements;
 }

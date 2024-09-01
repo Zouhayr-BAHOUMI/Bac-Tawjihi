@@ -1,10 +1,13 @@
 package tawjih.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +29,7 @@ public class Universite {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_adresse", referencedColumnName = "id")
     private Adresse adresse;
+
+    @OneToMany(mappedBy = "universite")
+    private List<Etablissement> etablissements;
 }

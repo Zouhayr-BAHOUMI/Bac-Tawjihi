@@ -1,5 +1,5 @@
 package tawjih.enums;
 
 public enum TypeEtablissement {
-    ECOLE,FACULTE
+    ECOLE,FACULTE,INSTITUT
 }
