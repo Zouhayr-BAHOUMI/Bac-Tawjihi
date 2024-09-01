@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tawjih.enums.TypeEtablissement;
+import tawjih.enums.TypePack;
 
 import java.time.LocalDate;
 
@@ -16,10 +18,13 @@ public class Pack {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "nomPack", nullable = false)
     private String nomPack;
+
+    @Enumerated(EnumType.STRING)
+    private TypePack typePack;
 
     @Column(name = "contenu", nullable = false)
     private String contenu;
