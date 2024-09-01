@@ -11,10 +11,9 @@ import tawjih.enums.Ville;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UniversiteDto {
+public class AdresseDto {
 
-    private Long id;
-    private String imageUrl;
-    private String nomUniversite;
-    private AdresseDto adresse;
+    private Region region;
+    private Province province;
+    private Ville ville;
 }

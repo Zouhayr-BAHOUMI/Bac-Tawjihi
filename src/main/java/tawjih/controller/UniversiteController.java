@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tawjih.dto.UniversiteDto;
 import tawjih.model.Universite;
 import tawjih.service.implimentation.UniversiteService;
 
@@ -18,12 +19,12 @@ public class UniversiteController {
     private UniversiteService universiteService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> ajouterUniversite(@RequestBody Universite universite){
+    public ResponseEntity<UniversiteDto> ajouterUniversite(@RequestBody UniversiteDto universiteDTO) {
         try {
-            universiteService.addUniversite(universite);
-            return ResponseEntity.status(HttpStatus.CREATED).body("created successfully");
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("not created" + e.getMessage());
+            UniversiteDto createdUniversite = universiteService.addUniversite(universiteDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUniversite);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 

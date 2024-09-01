@@ -3,7 +3,9 @@ package tawjih.service.implimentation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tawjih.dto.UniversiteDto;
 import tawjih.exception.UniversiteNotFoundException;
+import tawjih.mapper.UniversiteMapper;
 import tawjih.model.Adresse;
 import tawjih.model.Universite;
 import tawjih.repository.UniversiteRepository;
@@ -17,8 +19,13 @@ public class UniversiteService {
     @Autowired
     private UniversiteRepository universiteRepository;
 
-    public void addUniversite(Universite universite){
-        universiteRepository.save(universite);
+    @Autowired
+    private UniversiteMapper universiteMapper;
+
+    public UniversiteDto addUniversite(UniversiteDto universiteDTO) {
+        Universite universite = universiteMapper.toEntity(universiteDTO);
+        Universite savedUniversite = universiteRepository.save(universite);
+        return universiteMapper.toDTO(savedUniversite);
     }
 
     public List<Universite> getAllUniversites() {
