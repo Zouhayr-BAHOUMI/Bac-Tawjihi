@@ -2,6 +2,7 @@ package tawjih.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Universite {
     @JoinColumn(name = "id_adresse", referencedColumnName = "id")
     private Adresse adresse;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "universite")
     private List<Etablissement> etablissements;
 }

@@ -1,6 +1,7 @@
 package tawjih.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class Etablissement {
     @Enumerated(EnumType.STRING)
     private TypeEtablissement typeEtablissement;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_universite")
     private Universite universite;
