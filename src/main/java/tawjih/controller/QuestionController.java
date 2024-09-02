@@ -1,10 +1,53 @@
 package tawjih.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tawjih.model.Question;
+import tawjih.service.implimentation.QuestionService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/admin/gestion-question")
+@RequestMapping("/admin/gestion-questions")
 public class QuestionController {
+
+    @Autowired
+    private QuestionService questionService;
+
+    @PostMapping("/add")
+    public ResponseEntity<String> ajouterQuestion(@RequestBody Question question){
+        try {
+            questionService.addQuestion(question);
+            return ResponseEntity.status(HttpStatus.CREATED).body("created successfully");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("not created" + e.getMessage());
+        }
+    }
+
+    @GetMapping("/")
+    public List<Question> getAllQuestions() {
+        return questionService.getAllQuestions();
+    }
+
+    @GetMapping("/idPanne")
+    public Question showsQuestionById(@RequestParam Integer idQuestion){
+        Question question = questionService.getQuestion(idQuestion);
+        return question;
+    }
+
+    @PutMapping("/update/{idQuestion}")
+    public ResponseEntity<Void> modifierQuestion(@PathVariable Integer idQuestion, @RequestBody Question question){
+        questionService.updateQuestion(idQuestion,question);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delete/{idQuestion}")
+    public ResponseEntity<Void>  supprimerQuestion(@PathVariable Integer idQuestion){
+        questionService.deleteQuestion(idQuestion);
+        return ResponseEntity.noContent().build();
+    }
+
 }
