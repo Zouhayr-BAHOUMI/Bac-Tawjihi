@@ -1,5 +1,5 @@
 package tawjih.enums;
 
-public enum sexe {
+public enum Sexe {
     HOMME,FEMME
 }
