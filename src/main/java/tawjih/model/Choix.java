@@ -21,6 +21,6 @@ public class Choix {
     private String contenuChoix;
 
     @ManyToOne
-    @JoinColumn(name = "id_choix")
+    @JoinColumn(name = "id_question")
     private Question question;
 }
