@@ -1,4 +1,8 @@
 package tawjih.model;
 
-public class Etudiant {
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Etudiant extends Personne{
 }
