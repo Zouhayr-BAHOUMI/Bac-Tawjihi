@@ -8,6 +8,7 @@ import tawjih.model.Question;
 import tawjih.repository.QuestionRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionService {
@@ -17,6 +18,13 @@ public class QuestionService {
 
     public void addQuestion(Question question){
 
+        validationInputs(question);
+        Optional<Question> existQuestion = questionRepository
+                .findByContenuQuestion(question.getContenuQuestion());
+
+        if (existQuestion.isPresent()){
+            throw new IllegalArgumentException("contenu deja existe.");
+        }
         questionRepository.save(question);
     }
 
@@ -30,6 +38,8 @@ public class QuestionService {
     }
 
     public void updateQuestion(Integer idQuestion, Question question) {
+
+        validationInputs(question);
         questionRepository
                 .findById(idQuestion)
                 .orElseThrow(QuestionNotFoundException::new);
@@ -52,5 +62,14 @@ public class QuestionService {
     public List<Question> getAllQuestions() {
 
         return questionRepository.findAll();
+    }
+
+    private void validationInputs(Question question){
+        if(question.getContenuQuestion() == null && question.getContenuQuestion().isEmpty()){
+            throw new IllegalArgumentException("Question content is null or empty");
+        }
+        if (question.getChoix() == null && question.getChoix().isEmpty()){
+            throw new IllegalArgumentException("Question choix is null or empty");
+        }
     }
 }
