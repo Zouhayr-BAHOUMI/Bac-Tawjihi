@@ -22,18 +22,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
-//        http.csrf().disable().authorizeHttpRequests()
-//                .requestMatchers("").permitAll()
-//                .anyRequest().authenticated()
-//                .and().sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and().authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
 
-                        .requestMatchers("/auth/login", "/auth/register").permitAll()
+                        .requestMatchers("/auth/login", "/auth/register-etudiant").permitAll()
                         .requestMatchers("admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/etudiant/**").hasAuthority("ETUDIANT")
                         .anyRequest().authenticated()

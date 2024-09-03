@@ -21,13 +21,13 @@ import java.time.LocalDateTime;
 @Entity
 public class Etudiant extends Personne{
 
-    @Column(name = "nom", nullable = false)
+    @Column(name = "nom")
     private String nom;
 
-    @Column(name = "prenom", nullable = false)
+    @Column(name = "prenom")
     private String prenom;
 
-    @Column(name = "cin", nullable = false, unique = true)
+    @Column(name = "cin", unique = true)
     private String cin;
 
     @Enumerated(EnumType.STRING)
@@ -36,15 +36,15 @@ public class Etudiant extends Personne{
     @Column(name = "dateNaissence")
     private LocalDate dateNaissence;
 
-    @Column(name = "lieuNaissence", nullable = false)
+    @Column(name = "lieuNaissence")
     private String lieuNaissence;
 
-    @Column(name = "tele", nullable = false)
+    @Column(name = "tele")
     private String tele;
 
     @Enumerated(EnumType.STRING)
     private Specialite specialite;
 
-    @Column(name = "codeMassar", nullable = false, unique = true)
+    @Column(name = "codeMassar", unique = true)
     private String codeMassar;
 }
