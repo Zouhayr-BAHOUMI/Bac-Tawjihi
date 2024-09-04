@@ -35,4 +35,7 @@ public class Adresse {
     @JsonIgnore
     @OneToMany(mappedBy = "adresse")
     private List<Etablissement> etablissements;
+
+    @OneToMany(mappedBy = "adresse")
+    private List<Etudiant> etudiants;
 }
