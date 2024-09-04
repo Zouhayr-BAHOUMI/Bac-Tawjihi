@@ -45,7 +45,7 @@ public class Etudiant extends Personne{
     @Column(name = "codeMassar", unique = true)
     private String codeMassar;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_adresse")
     private Adresse adresse;
 }
