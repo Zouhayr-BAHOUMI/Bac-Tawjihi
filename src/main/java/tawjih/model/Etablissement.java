@@ -22,6 +22,9 @@ public class Etablissement {
     @Column(name = "nomEtablissement", nullable = false)
     private String nomEtablissement;
 
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
     @Column(name = "localisation")
     private String localisation;
 

@@ -1,10 +1,7 @@
 package tawjih.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,4 +44,8 @@ public class Etudiant extends Personne{
 
     @Column(name = "codeMassar", unique = true)
     private String codeMassar;
+
+    @ManyToOne
+    @JoinColumn(name = "id_adresse")
+    private Adresse adresse;
 }

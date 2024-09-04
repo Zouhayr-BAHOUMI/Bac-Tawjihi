@@ -38,8 +38,13 @@ public class EtablissementService {
 
         if (universiteAdresse.getVille() == null && etablissement.getAdresse() != null) {
             universiteAdresse.setVille(etablissement.getAdresse().getVille());
-            adresseRepository.save(universiteAdresse);
         }
+
+        if (universiteAdresse.getProvince() == null && etablissement.getAdresse() != null) {
+            universiteAdresse.setProvince(etablissement.getAdresse().getProvince());
+        }
+
+        adresseRepository.save(universiteAdresse);
 
         etablissement.setAdresse(universiteAdresse);
         etablissement.setUniversite(universite);
