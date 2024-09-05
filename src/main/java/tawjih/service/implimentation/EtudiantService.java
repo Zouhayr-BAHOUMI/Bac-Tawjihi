@@ -52,7 +52,20 @@ public class EtudiantService {
                     );
 
             if (existeAdresse.isPresent()){
-                etudiant.setAdresse(existeAdresse.get());
+                Adresse adresse = existeAdresse.get();
+                if (adresse.getRegion() == null && newAdresse.getRegion() != null) {
+                    adresse.setRegion(newAdresse.getRegion());
+                }
+                if (adresse.getProvince() == null && newAdresse.getProvince() != null) {
+                    adresse.setProvince(newAdresse.getProvince());
+                }
+                if (adresse.getVille() == null && newAdresse.getVille() != null) {
+                    adresse.setVille(newAdresse.getVille());
+                }
+
+                adresseRepository.save(adresse);
+                etudiant.setAdresse(adresse);
+
             }else {
                 etudiant.setAdresse(newAdresse);
             }
