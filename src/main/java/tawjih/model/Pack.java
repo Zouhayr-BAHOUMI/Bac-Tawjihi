@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tawjih.enums.StatusPack;
 import tawjih.enums.TypeEtablissement;
 import tawjih.enums.TypePack;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +28,9 @@ public class Pack {
     @Enumerated(EnumType.STRING)
     private TypePack typePack;
 
+    @Enumerated(EnumType.STRING)
+    private StatusPack statusPack;
+
     @Column(name = "contenu", nullable = false)
     private String contenu;
 
@@ -34,4 +39,7 @@ public class Pack {
 
     @Column(name = "dateLimite", nullable = false)
     private LocalDate dateLimit;
+
+    @OneToMany(mappedBy = "pack")
+    private List<Etudiant> etudiants;
 }

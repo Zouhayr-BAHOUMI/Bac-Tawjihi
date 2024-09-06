@@ -48,4 +48,8 @@ public class Etudiant extends Personne{
     @ManyToOne
     @JoinColumn(name = "id_adresse")
     private Adresse adresse;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pack")
+    private Pack pack;
 }
