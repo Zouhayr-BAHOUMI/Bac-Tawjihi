@@ -3,11 +3,15 @@ package tawjih.service.implimentation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tawjih.enums.StatusPack;
 import tawjih.exception.EtudiantNotFoundException;
+import tawjih.exception.PackNotFoundException;
 import tawjih.model.Adresse;
 import tawjih.model.Etudiant;
+import tawjih.model.Pack;
 import tawjih.repository.AdresseRepository;
 import tawjih.repository.EtudiantRepository;
+import tawjih.repository.PackRepository;
 
 import java.util.Optional;
 
@@ -19,6 +23,9 @@ public class EtudiantService {
 
     @Autowired
     private AdresseRepository adresseRepository;
+
+    @Autowired
+    private PackRepository packRepository;
 
     public Etudiant getEtudiant(Integer idEtudiant) {
 
@@ -70,6 +77,21 @@ public class EtudiantService {
                 etudiant.setAdresse(newAdresse);
             }
         }
+
+        return etudiantRepository.save(etudiant);
+    }
+
+    public Etudiant choisirPack(Integer idEtudiant, Integer idPack){
+        Etudiant etudiant = getEtudiant(idEtudiant);
+        Pack packChoisi = packRepository
+                .findById(idPack)
+                .orElseThrow(PackNotFoundException::new);
+
+        etudiant.setPack(packChoisi);
+
+        packChoisi.setStatusPack(StatusPack.IMPAYE);
+
+        packRepository.save(packChoisi);
 
         return etudiantRepository.save(etudiant);
     }

@@ -1,5 +1,5 @@
 package tawjih.enums;
 
 public enum StatusPack {
-    PAYE, IMPAYE
+    PAYE, IMPAYE,FAIL
 }
