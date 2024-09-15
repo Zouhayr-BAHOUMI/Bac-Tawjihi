@@ -8,8 +8,12 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import tawjih.model.Etudiant;
+import tawjih.model.Pack;
+import tawjih.model.Recu;
 import tawjih.repository.RecuRepository;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,5 +40,17 @@ public class StripeService {
         parametrs.put("payment_method_types", Collections.singletonList("card"));
 
         return PaymentIntent.create(parametrs);
+    }
+
+    public Recu savePaimentsDetails(Etudiant etudiant, Pack pack, PaymentIntent paymentIntent) {
+        Recu recu = new Recu();
+        recu.setEtudiant(etudiant);
+        recu.setPack(pack);
+        recu.setPaymentIntentId(paymentIntent.getId());
+        recu.setStatus(paymentIntent.getStatus());
+        recu.setPaymentDate(LocalDate.now());
+        recu.setAmountPaid(paymentIntent.getAmount()/100.0);
+
+        return recuRepository.save(recu);
     }
 }

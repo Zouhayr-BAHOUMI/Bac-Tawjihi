@@ -31,8 +31,8 @@ public class Recu {
 
     private String paymentIntentId;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus status;
+
+    private String status;
 
     private Double amountPaid;
     private LocalDate paymentDate;
