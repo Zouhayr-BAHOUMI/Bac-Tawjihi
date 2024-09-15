@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentRequest {
+public class PaymentCompletionRequestDto {
 
-    private Double amount;
-    private String currency;
-    private String description;
+    private String paymentIntent;
+    private Integer idEtudiant;
+    private Integer idPack;
 }
