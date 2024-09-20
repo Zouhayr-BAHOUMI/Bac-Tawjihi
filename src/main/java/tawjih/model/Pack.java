@@ -42,4 +42,7 @@ public class Pack {
 
     @OneToMany(mappedBy = "pack")
     private List<Etudiant> etudiants;
+
+    @OneToMany(mappedBy = "pack")
+    private List<Recu> recus;
 }

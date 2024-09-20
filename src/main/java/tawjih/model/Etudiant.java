@@ -52,4 +52,7 @@ public class Etudiant extends Personne{
     @ManyToOne
     @JoinColumn(name = "id_pack")
     private Pack pack;
+
+    @OneToOne(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    private Recu recu;
 }
