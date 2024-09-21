@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 
 @Data
@@ -31,4 +32,7 @@ public class Test {
     @ManyToOne
     @JoinColumn(name = "id_etudiant")
     private Etudiant etudiant;
+
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions;
 }

@@ -35,10 +35,10 @@ public class TestService {
 
     public Test getTest(Integer idTest) {
 
-        Test test = testRepository
+        return testRepository
                 .findById(idTest)
                 .orElseThrow(TestNotFoundException::new);
-        return test;
+
     }
 
     public void updateTest(Integer idTest, Test test) {
