@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tawjih.exception.QuestionNotFoundException;
 import tawjih.exception.TestNotFoundException;
+import tawjih.model.Choix;
 import tawjih.model.Question;
 import tawjih.model.Test;
 import tawjih.repository.QuestionRepository;
@@ -32,6 +33,13 @@ public class QuestionService {
 
         if (existQuestion.isPresent()){
             throw new IllegalArgumentException("contenu deja existe.");
+        }
+
+        long correctChoice = question.getChoix()
+                .stream().filter(Choix::isCorrect).count();
+
+        if (correctChoice != 1) {
+            throw new IllegalArgumentException("choose at least one correct");
         }
 
         question.setTest(test);
