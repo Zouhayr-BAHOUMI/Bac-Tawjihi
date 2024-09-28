@@ -18,9 +18,9 @@ public class QuestionController {
     private QuestionService questionService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> ajouterQuestion(@RequestBody Question question){
+    public ResponseEntity<String> ajouterQuestion( @RequestParam Integer idTest ,@RequestBody Question question){
         try {
-            questionService.addQuestion(question);
+            questionService.addQuestion(question, idTest);
             return ResponseEntity.status(HttpStatus.CREATED).body("created successfully");
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("not created" + e.getMessage());

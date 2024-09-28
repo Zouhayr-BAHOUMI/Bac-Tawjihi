@@ -20,6 +20,9 @@ public class Choix {
     @Column(name = "contenuChoix", nullable = false)
     private String contenuChoix;
 
+    @Column(name = "isCorrect", nullable = false)
+    private boolean isCorrect;
+
     @ManyToOne
     @JoinColumn(name = "id_question")
     private Question question;

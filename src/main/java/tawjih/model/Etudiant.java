@@ -11,6 +11,7 @@ import tawjih.enums.TypePack;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -53,6 +54,11 @@ public class Etudiant extends Personne{
     @JoinColumn(name = "id_pack")
     private Pack pack;
 
+
+    @OneToMany(mappedBy = "etudiant")
+    private List<Test> tests;
+
     @OneToOne(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private Recu recu;
+
 }
