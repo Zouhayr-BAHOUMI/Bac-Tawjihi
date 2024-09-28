@@ -37,4 +37,16 @@ public class TestController {
     public Test showsTestById(@RequestParam Integer idTest){
         return testService.getTest(idTest);
     }
+
+    @PutMapping("/update/{idTest}")
+    public ResponseEntity<Void> modifierTest(@PathVariable Integer idTest, @RequestBody Test test){
+        testService.updateTest(idTest,test);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delete/{idTest}")
+    public ResponseEntity<Void>  supprimerTest(@PathVariable Integer idTest){
+        testService.deleteTest(idTest);
+        return ResponseEntity.noContent().build();
+    }
 }
