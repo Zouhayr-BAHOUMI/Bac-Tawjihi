@@ -93,6 +93,27 @@ class EtudiantServiceTest {
     }
 
     @Test
+    public void testUpdateEtudiant_WhenAdresseExists() {
+        Integer idEtudiant = 1;
+        Etudiant existingEtudiant = new Etudiant();
+        existingEtudiant.setId(idEtudiant);
+
+        Etudiant updatedEtudiant = new Etudiant();
+        Adresse existingAdresse = new Adresse();
+        existingAdresse.setRegion(tawjih.enums.Region.RABAT_SALE_KENITRA);
+        updatedEtudiant.setAdresse(existingAdresse);
+
+        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.of(existingEtudiant));
+        when(adresseRepository.findByRegionAndAndProvinceAndAndVille(any(), any(), any())).thenReturn(Optional.of(existingAdresse));
+        when(etudiantRepository.save(any(Etudiant.class))).thenReturn(updatedEtudiant);
+
+        Etudiant result = etudiantService.updateEtudiant(idEtudiant, updatedEtudiant);
+
+        assertEquals(existingAdresse, result.getAdresse());
+        verify(adresseRepository).save(existingAdresse);
+    }
+
+    @Test
     public void testChoisirPack_IfEtudiantAndPackExist() {
         Integer idEtudiant = 1;
         Integer idPack = 1;
