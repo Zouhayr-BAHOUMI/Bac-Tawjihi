@@ -6,13 +6,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import tawjih.auth.AuthenticationRequest;
 import tawjih.auth.RegisterRequest;
 import tawjih.config.JwtService;
 import tawjih.enums.Role;
 import tawjih.repository.PersonneRepository;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class AuthenticationServiceTest {
 
@@ -64,5 +70,8 @@ class AuthenticationServiceTest {
 
         assertEquals("password not equal to confirm password", exception.getMessage());
     }
+
+
+
 
 }
