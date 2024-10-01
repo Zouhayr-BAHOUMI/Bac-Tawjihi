@@ -50,4 +50,19 @@ class AuthenticationServiceTest {
         assertEquals("Cannot register new admin", exception.getMessage());
     }
 
+    @Test
+    public void testRegister_WithConfirmPasswordNotMatch() {
+        RegisterRequest request = new RegisterRequest();
+        request.setPassword("password");
+        request.setConfirmPassword("differentPassword");
+
+        Role role = Role.ETUDIANT;
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authenticationService.register(request, role);
+        });
+
+        assertEquals("password not equal to confirm password", exception.getMessage());
+    }
+
 }
