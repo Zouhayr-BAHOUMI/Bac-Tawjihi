@@ -16,8 +16,7 @@ import tawjih.repository.PackRepository;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -114,7 +113,7 @@ class EtudiantServiceTest {
     }
 
     @Test
-    public void testChoisirPack_IfEtudiantAndPackExist() {
+    public void testChoisirPack_WhenEtudiantAndPackExist() {
         Integer idEtudiant = 1;
         Integer idPack = 1;
 
@@ -126,10 +125,14 @@ class EtudiantServiceTest {
 
         when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.of(etudiant));
         when(packRepository.findById(idPack)).thenReturn(Optional.of(pack));
+        when(etudiantRepository.save(any(Etudiant.class))).thenReturn(etudiant);
 
         Etudiant updatedEtudiant = etudiantService.choisirPack(idEtudiant, idPack);
 
+        assertNotNull(updatedEtudiant);
         assertEquals(pack, updatedEtudiant.getPack());
         assertEquals(StatusPack.IMPAYE, pack.getStatusPack());
+        verify(packRepository).save(pack);
+        verify(etudiantRepository).save(etudiant);
     }
 }
