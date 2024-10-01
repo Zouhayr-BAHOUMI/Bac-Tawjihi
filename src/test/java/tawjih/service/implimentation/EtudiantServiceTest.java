@@ -5,8 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import tawjih.enums.StatusPack;
+import tawjih.exception.EtudiantNotFoundException;
 import tawjih.model.Adresse;
 import tawjih.model.Etudiant;
+import tawjih.model.Pack;
 import tawjih.repository.AdresseRepository;
 import tawjih.repository.EtudiantRepository;
 import tawjih.repository.PackRepository;
@@ -14,6 +17,9 @@ import tawjih.repository.PackRepository;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class EtudiantServiceTest {
@@ -22,10 +28,10 @@ class EtudiantServiceTest {
     private EtudiantRepository etudiantRepository;
 
     @Mock
-    private AdresseRepository adresseRepository;
+    private PackRepository packRepository;
 
     @Mock
-    private PackRepository packRepository;
+    private AdresseRepository adresseRepository;
 
     @InjectMocks
     private EtudiantService etudiantService;
@@ -45,5 +51,64 @@ class EtudiantServiceTest {
 
         Etudiant foundEtudiant = etudiantService.getEtudiant(idEtudiant);
         assertEquals(etudiant, foundEtudiant);
+    }
+
+    @Test
+    public void testGetEtudiant_IfEtudiantNotExist() {
+        Integer idEtudiant = 1;
+
+        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.empty());
+
+        assertThrows(EtudiantNotFoundException.class, () -> {
+            etudiantService.getEtudiant(idEtudiant);
+        });
+    }
+
+    @Test
+    public void testUpdateEtudiant_WhenEtudiantExists() {
+        Integer idEtudiant = 1;
+        Etudiant existingEtudiant = new Etudiant();
+        existingEtudiant.setId(idEtudiant);
+        existingEtudiant.setNom("Old Name");
+
+        Etudiant updatedEtudiant = new Etudiant();
+        updatedEtudiant.setNom("New Name");
+        updatedEtudiant.setPrenom("New Prenom");
+        Adresse newAdresse = new Adresse();
+        newAdresse.setRegion(tawjih.enums.Region.RABAT_SALE_KENITRA);
+        newAdresse.setProvince(tawjih.enums.Province.KENITRA);
+        newAdresse.setVille(tawjih.enums.Ville.KENITRA);
+        updatedEtudiant.setAdresse(newAdresse);
+
+        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.of(existingEtudiant));
+        when(adresseRepository.findByRegionAndAndProvinceAndAndVille(any(), any(), any())).thenReturn(Optional.empty());
+        when(etudiantRepository.save(any(Etudiant.class))).thenReturn(updatedEtudiant);
+
+        Etudiant result = etudiantService.updateEtudiant(idEtudiant, updatedEtudiant);
+
+        assertEquals("New Name", result.getNom());
+        assertEquals("New Prenom", result.getPrenom());
+        assertEquals(newAdresse, result.getAdresse());
+        verify(etudiantRepository).save(any(Etudiant.class));
+    }
+
+    @Test
+    public void testChoisirPack_IfEtudiantAndPackExist() {
+        Integer idEtudiant = 1;
+        Integer idPack = 1;
+
+        Etudiant etudiant = new Etudiant();
+        etudiant.setId(idEtudiant);
+
+        Pack pack = new Pack();
+        pack.setId(idPack);
+
+        when(etudiantRepository.findById(idEtudiant)).thenReturn(Optional.of(etudiant));
+        when(packRepository.findById(idPack)).thenReturn(Optional.of(pack));
+
+        Etudiant updatedEtudiant = etudiantService.choisirPack(idEtudiant, idPack);
+
+        assertEquals(pack, updatedEtudiant.getPack());
+        assertEquals(StatusPack.IMPAYE, pack.getStatusPack());
     }
 }
