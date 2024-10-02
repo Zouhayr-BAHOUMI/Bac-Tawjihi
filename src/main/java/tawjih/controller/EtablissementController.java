@@ -53,4 +53,9 @@ public class EtablissementController {
         etablissementService.deleteEtablissement(idEtablissement);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/universite/{idUniversite}")
+    public List<Etablissement> getEtablissementsByUniversite(@PathVariable Long idUniversite) {
+        return etablissementService.getEtablissementsByUniversite(idUniversite);
+    }
 }
