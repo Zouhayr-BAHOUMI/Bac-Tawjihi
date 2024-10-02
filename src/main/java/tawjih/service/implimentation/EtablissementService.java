@@ -94,5 +94,11 @@ public class EtablissementService {
         etablissementRepository.delete(etablissementSupprime);
     }
 
+    public List<Etablissement> getEtablissementsByUniversite(Long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite)
+                .orElseThrow(UniversiteNotFoundException::new);
+        return etablissementRepository.findByUniversite(universite);
+    }
+
 
 }
