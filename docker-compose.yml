@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  tawjih-db:
+    image: postgres
+    container_name: tawjih-db
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=tawjih
+    ports:
+      - '5432:5432'
+
+  tawjih:
+    container_name: tawjih_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8082:8082'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://tawjih-db:5432/tawjih
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - tawjih-db
