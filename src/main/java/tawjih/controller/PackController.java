@@ -34,8 +34,28 @@ public class PackController {
 
     @GetMapping("/idPanne")
     public Pack showsPackById(@RequestParam Integer idPack){
-        Pack pack = packService.getPack(idPack);
-        return pack;
+       return packService.getPack(idPack);
+
+    }
+
+    @GetMapping("/filieres/{idPack}")
+    public ResponseEntity<Pack> getPackWithFilieres(@PathVariable Integer idPack) {
+        try {
+            Pack pack = packService.getPackWithFilieres(idPack);
+            return ResponseEntity.ok(pack);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/filieres")
+    public ResponseEntity<List<Pack>> getAllPacksWithFilieres() {
+        try {
+            List<Pack> packs = packService.getAllPacksWithFilieres();
+            return ResponseEntity.ok(packs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/update/{idPack}")

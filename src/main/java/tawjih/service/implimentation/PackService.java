@@ -3,6 +3,7 @@ package tawjih.service.implimentation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tawjih.enums.StatusPack;
 import tawjih.exception.PackNotFoundException;
 import tawjih.model.Pack;
 import tawjih.repository.PackRepository;
@@ -17,17 +18,18 @@ public class PackService {
     private PackRepository packRepository;
 
     public void addPack(Pack pack){
-
+        System.out.println(pack);
+        pack.setStatusPack(StatusPack.IMPAYE);
         packRepository.save(pack);
     }
 
 
     public Pack getPack(Integer idPack) {
 
-        Pack pack = packRepository
+        return  packRepository
                 .findById(idPack)
                 .orElseThrow(PackNotFoundException::new);
-        return pack;
+
     }
 
     public void updatePack(Integer idPack, Pack pack) {
@@ -53,4 +55,14 @@ public class PackService {
 
         return packRepository.findAll();
     }
+
+    public Pack getPackWithFilieres(Integer idPack) {
+        return packRepository.findPackWithFilieresById(idPack);
+    }
+
+    public List<Pack> getAllPacksWithFilieres() {
+        return packRepository.findAllPacksWithFilieres();
+    }
+
+
 }
