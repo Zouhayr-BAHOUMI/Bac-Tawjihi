@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tawjih.enums.PackFiliere;
 import tawjih.enums.StatusPack;
 import tawjih.enums.TypeEtablissement;
 import tawjih.enums.TypePack;
@@ -27,6 +28,9 @@ public class Pack {
 
     @Enumerated(EnumType.STRING)
     private TypePack typePack;
+
+    @Enumerated(EnumType.STRING)
+    private PackFiliere packFiliere;
 
     @Enumerated(EnumType.STRING)
     private StatusPack statusPack;

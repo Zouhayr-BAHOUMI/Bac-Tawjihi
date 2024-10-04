@@ -34,8 +34,8 @@ public class PackController {
 
     @GetMapping("/idPanne")
     public Pack showsPackById(@RequestParam Integer idPack){
-        Pack pack = packService.getPack(idPack);
-        return pack;
+       return packService.getPack(idPack);
+
     }
 
     @PutMapping("/update/{idPack}")
