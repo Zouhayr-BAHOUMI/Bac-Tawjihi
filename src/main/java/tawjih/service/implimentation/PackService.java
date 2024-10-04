@@ -56,5 +56,13 @@ public class PackService {
         return packRepository.findAll();
     }
 
+    public Pack getPackWithFilieres(Integer idPack) {
+        return packRepository.findPackWithFilieresById(idPack);
+    }
+
+    public List<Pack> getAllPacksWithFilieres() {
+        return packRepository.findAllPacksWithFilieres();
+    }
+
 
 }
