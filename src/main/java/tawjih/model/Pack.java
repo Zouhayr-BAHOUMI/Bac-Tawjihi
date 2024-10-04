@@ -29,8 +29,12 @@ public class Pack {
     @Enumerated(EnumType.STRING)
     private TypePack typePack;
 
+    @ElementCollection(targetClass = PackFiliere.class)
     @Enumerated(EnumType.STRING)
-    private PackFiliere packFiliere;
+    @CollectionTable(name = "pack_filiere", joinColumns = @JoinColumn(name = "pack_id"))
+    @Column(name = "filiere")
+    private List<PackFiliere> packFilieres;
+
 
     @Enumerated(EnumType.STRING)
     private StatusPack statusPack;

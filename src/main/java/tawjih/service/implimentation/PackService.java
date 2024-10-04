@@ -18,7 +18,7 @@ public class PackService {
     private PackRepository packRepository;
 
     public void addPack(Pack pack){
-
+        System.out.println(pack);
         pack.setStatusPack(StatusPack.IMPAYE);
         packRepository.save(pack);
     }
@@ -55,4 +55,6 @@ public class PackService {
 
         return packRepository.findAll();
     }
+
+
 }
