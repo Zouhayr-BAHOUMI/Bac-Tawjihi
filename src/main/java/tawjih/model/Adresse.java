@@ -2,6 +2,7 @@ package tawjih.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,10 +33,12 @@ public class Adresse {
     @Enumerated(EnumType.STRING)
     private Ville ville;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "adresse")
+    @JsonIgnoreProperties("adresse")
     private List<Etablissement> etablissements;
 
     @OneToMany(mappedBy = "adresse")
+    @JsonIgnoreProperties({"adresse", "tests", "recu", "pack"})
     private List<Etudiant> etudiants;
 }
