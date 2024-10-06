@@ -40,6 +40,7 @@ public class EtudiantService {
 
         etudiant.setNom(updateEtudiant.getNom());
         etudiant.setPrenom(updateEtudiant.getPrenom());
+        etudiant.setImageUrl(updateEtudiant.getImageUrl());
         etudiant.setCin(updateEtudiant.getCin());
         etudiant.setSexe(updateEtudiant.getSexe());
         etudiant.setTele(updateEtudiant.getTele());
@@ -90,7 +91,7 @@ public class EtudiantService {
 
         etudiant.setPack(packChoisi);
 
-        packChoisi.setStatusPack(StatusPack.IMPAYE);
+        packChoisi.setStatusPack(StatusPack.PAYE);
 
         packRepository.save(packChoisi);
 
