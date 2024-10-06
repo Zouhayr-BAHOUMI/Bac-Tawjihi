@@ -38,8 +38,14 @@ public class QuestionService {
         long correctChoice = question.getChoix()
                 .stream().filter(Choix::isCorrect).count();
 
+        System.out.println("Correct choices received: " + correctChoice);
+
         if (correctChoice != 1) {
             throw new IllegalArgumentException("choose at least one correct");
+        }
+
+        for (Choix choice : question.getChoix()) {
+            choice.setQuestion(question);
         }
 
         question.setTest(test);

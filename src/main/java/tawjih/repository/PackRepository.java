@@ -12,7 +12,6 @@ public interface PackRepository extends JpaRepository<Pack, Integer> {
             "WHERE p.id = :id", nativeQuery = true)
     Pack findPackWithFilieresById(Integer id);
 
-    @Query(value = "SELECT p.*, pf.filiere FROM packs p " +
-            "JOIN pack_filiere pf ON p.id = pf.pack_id", nativeQuery = true)
+    @Query("SELECT DISTINCT p FROM Pack p JOIN FETCH p.packFilieres")
     List<Pack> findAllPacksWithFilieres();
 }

@@ -44,15 +44,15 @@ public class TestService {
     public void updateTest(Integer idTest, Test test) {
 
 
-        testRepository
+        Test existTest = testRepository
                 .findById(idTest)
                 .orElseThrow(TestNotFoundException::new);
 
-        test.setTitre(test.getTitre());
-        test.setDescription(test.getDescription());
-        test.setDuree(test.getDuree());
+        existTest.setTitre(test.getTitre());
+        existTest.setDescription(test.getDescription());
+        existTest.setDuree(test.getDuree());
 
-        testRepository.save(test);
+        testRepository.save(existTest);
 
     }
 

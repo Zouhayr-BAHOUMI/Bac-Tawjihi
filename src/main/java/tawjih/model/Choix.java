@@ -1,6 +1,8 @@
 package tawjih.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +23,11 @@ public class Choix {
     private String contenuChoix;
 
     @Column(name = "isCorrect", nullable = false)
+    @JsonProperty("isCorrect")
     private boolean isCorrect;
 
     @ManyToOne
     @JoinColumn(name = "id_question")
+    @JsonBackReference
     private Question question;
 }

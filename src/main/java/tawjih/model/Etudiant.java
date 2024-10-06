@@ -7,10 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tawjih.enums.Sexe;
 import tawjih.enums.Specialite;
-import tawjih.enums.TypePack;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
