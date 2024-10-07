@@ -60,7 +60,12 @@ public class Etudiant extends Personne{
     private Pack pack;
 
 
-    @OneToMany(mappedBy = "etudiant")
+    @ManyToMany
+    @JoinTable(
+            name = "etudiant_test",
+            joinColumns = @JoinColumn(name = "id_etudiant"),
+            inverseJoinColumns = @JoinColumn(name = "id_test")
+    )
     @JsonIgnoreProperties("etudiants")
     private List<Test> tests;
 
