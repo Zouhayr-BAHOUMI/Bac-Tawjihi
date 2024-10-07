@@ -12,6 +12,6 @@ import tawjih.model.Pack;
 @AllArgsConstructor
 public class PaymentConfirmationDto {
     private String paymentIntentId;
-    private Etudiant etudiant;
-    private Pack pack;
+    private Integer etudiantId;
+    private Integer packId;
 }

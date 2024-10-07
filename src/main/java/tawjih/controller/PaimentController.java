@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tawjih.dto.PaymentConfirmationDto;
 import tawjih.dto.PaymentRequestDto;
+import tawjih.model.Etudiant;
+import tawjih.model.Pack;
 import tawjih.model.Recu;
+import tawjih.service.implimentation.EtudiantService;
+import tawjih.service.implimentation.PackService;
 import tawjih.service.implimentation.StripeService;
 
 import java.util.Map;
@@ -24,6 +28,12 @@ public class PaimentController {
 
     @Autowired
     private StripeService stripeService;
+
+    @Autowired
+    private EtudiantService etudiantService;
+
+    @Autowired
+    private PackService packService;
 
     @PostMapping("/create-payment")
     public ResponseEntity<Map<String, String>> createPaymentIntent(@RequestBody PaymentRequestDto paymentRequest) {
@@ -41,9 +51,13 @@ public class PaimentController {
     @PostMapping("/confirm-payment")
     public ResponseEntity<Recu> confirmPayment(@RequestBody PaymentConfirmationDto confirmationDto) {
         try {
+            System.out.println  ( confirmationDto);
             PaymentIntent paymentIntent = stripeService.confirmPayment(confirmationDto.getPaymentIntentId());
 
-            Recu recu = stripeService.savePaimentsDetails(confirmationDto.getEtudiant(), confirmationDto.getPack(), paymentIntent);
+            Etudiant etudiant = etudiantService.getEtudiant(confirmationDto.getEtudiantId());
+            Pack pack = packService.getPack(confirmationDto.getPackId());
+
+            Recu recu = stripeService.savePaimentsDetails(etudiant, pack, paymentIntent);
             return ResponseEntity.ok(recu);
         } catch (StripeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
