@@ -53,4 +53,9 @@ public class StripeService {
 
         return recuRepository.save(recu);
     }
+
+    public PaymentIntent confirmPayment(String paymentIntentId) throws StripeException {
+        PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
+        return paymentIntent;
+    }
 }
