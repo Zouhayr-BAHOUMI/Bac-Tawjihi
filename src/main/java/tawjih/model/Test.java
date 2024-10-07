@@ -1,6 +1,9 @@
 package tawjih.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,8 +34,10 @@ public class Test {
 
     @ManyToOne
     @JoinColumn(name = "id_etudiant")
+    @JsonIgnoreProperties({"tests", "recu", "pack", "adresse"})
     private Etudiant etudiant;
 
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("test")
     private List<Question> questions;
 }

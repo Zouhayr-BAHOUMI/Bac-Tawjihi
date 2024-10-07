@@ -1,6 +1,8 @@
 package tawjih.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,9 +29,11 @@ public class Question {
     private Domain domain;
 
     @OneToMany(mappedBy = "question" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Choix> choix;
 
     @ManyToOne
     @JoinColumn(name = "id_test")
+    @JsonBackReference
     private Test test;
 }

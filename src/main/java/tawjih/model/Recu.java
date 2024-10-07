@@ -1,11 +1,12 @@
 package tawjih.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tawjih.enums.PaymentStatus;
 
 import java.time.LocalDate;
 
@@ -22,10 +23,12 @@ public class Recu {
 
     @OneToOne
     @JoinColumn(name = "id_etudiant")
+    @JsonIgnoreProperties({"recu", "tests", "pack", "adresse"})
     private Etudiant etudiant;
 
     @ManyToOne
     @JoinColumn(name = "id_pack")
+    @JsonIgnoreProperties({"recus", "etudiants"})
     private Pack pack;
 
 

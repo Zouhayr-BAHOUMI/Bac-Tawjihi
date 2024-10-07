@@ -1,5 +1,6 @@
 package tawjih.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,8 +50,10 @@ public class Pack {
     private LocalDate dateLimit;
 
     @OneToMany(mappedBy = "pack")
+    @JsonIgnoreProperties({"pack", "tests", "recu"})
     private List<Etudiant> etudiants;
 
     @OneToMany(mappedBy = "pack")
+    @JsonIgnoreProperties("pack")
     private List<Recu> recus;
 }

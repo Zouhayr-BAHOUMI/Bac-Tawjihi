@@ -9,6 +9,9 @@ import tawjih.model.Etudiant;
 import tawjih.model.Pack;
 import tawjih.service.implimentation.EtudiantService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/etudiant")
 public class EtudiantController {
@@ -30,11 +33,16 @@ public class EtudiantController {
     }
 
     @PostMapping("/choisir-pack/{idPack}")
-    public ResponseEntity<Etudiant> selectPack(@AuthenticationPrincipal Etudiant etudiant,
+    public ResponseEntity<Map<String, Object>> selectPack(@AuthenticationPrincipal Etudiant etudiant,
                                                @PathVariable Integer idPack) {
 
-        Etudiant etudiantLogged = etudiantService.choisirPack(etudiant.getId(),idPack);
-        return  ResponseEntity.ok(etudiantLogged);
+        Etudiant etudiantLogged = etudiantService.choisirPack(etudiant.getId(), idPack);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("etudiant", etudiantLogged);
+        response.put("pack", etudiantLogged.getPack());
+
+        return ResponseEntity.ok(response);
 
     }
 }

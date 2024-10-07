@@ -18,7 +18,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> ajouterQuestion( @RequestParam Integer idTest ,@RequestBody Question question){
+    public ResponseEntity<?> ajouterQuestion( @RequestParam Integer idTest ,@RequestBody Question question){
         try {
             questionService.addQuestion(question, idTest);
             return ResponseEntity.status(HttpStatus.CREATED).body("created successfully");

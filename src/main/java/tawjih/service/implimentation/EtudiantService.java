@@ -40,6 +40,7 @@ public class EtudiantService {
 
         etudiant.setNom(updateEtudiant.getNom());
         etudiant.setPrenom(updateEtudiant.getPrenom());
+        etudiant.setImageUrl(updateEtudiant.getImageUrl());
         etudiant.setCin(updateEtudiant.getCin());
         etudiant.setSexe(updateEtudiant.getSexe());
         etudiant.setTele(updateEtudiant.getTele());
@@ -51,12 +52,12 @@ public class EtudiantService {
 
         Adresse newAdresse = updateEtudiant.getAdresse();
         if (newAdresse!= null){
-            Optional<Adresse> existeAdresse = adresseRepository
-                    .findByRegionAndAndProvinceAndAndVille(
+            Optional<Adresse> existeAdresse = Optional.ofNullable(adresseRepository
+                    .findByRegionAndProvinceAndVille(
                             newAdresse.getRegion(),
                             newAdresse.getProvince(),
                             newAdresse.getVille()
-                    );
+                    ));
 
             if (existeAdresse.isPresent()){
                 Adresse adresse = existeAdresse.get();
@@ -74,6 +75,7 @@ public class EtudiantService {
                 etudiant.setAdresse(adresse);
 
             }else {
+                adresseRepository.save(newAdresse);
                 etudiant.setAdresse(newAdresse);
             }
         }
@@ -89,7 +91,7 @@ public class EtudiantService {
 
         etudiant.setPack(packChoisi);
 
-        packChoisi.setStatusPack(StatusPack.IMPAYE);
+        packChoisi.setStatusPack(StatusPack.PAYE);
 
         packRepository.save(packChoisi);
 

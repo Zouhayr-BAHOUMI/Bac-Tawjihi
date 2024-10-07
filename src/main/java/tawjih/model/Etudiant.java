@@ -1,16 +1,16 @@
 package tawjih.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tawjih.enums.Sexe;
 import tawjih.enums.Specialite;
-import tawjih.enums.TypePack;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -27,6 +27,9 @@ public class Etudiant extends Personne{
 
     @Column(name = "cin", unique = true)
     private String cin;
+
+    @Column(name = "imageUrl")
+    private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private Sexe sexe;
@@ -48,17 +51,21 @@ public class Etudiant extends Personne{
 
     @ManyToOne
     @JoinColumn(name = "id_adresse")
+    @JsonIgnoreProperties("etudiants")
     private Adresse adresse;
 
     @ManyToOne
     @JoinColumn(name = "id_pack")
+    @JsonIgnoreProperties("etudiants")
     private Pack pack;
 
 
     @OneToMany(mappedBy = "etudiant")
+    @JsonIgnoreProperties("etudiants")
     private List<Test> tests;
 
     @OneToOne(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("etudiants")
     private Recu recu;
 
 }
