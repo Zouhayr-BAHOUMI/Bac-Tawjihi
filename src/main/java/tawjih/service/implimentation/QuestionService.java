@@ -97,11 +97,14 @@ public class QuestionService {
         }
     }
 
-    public List<Question> getRandomQuestions(int limit) {
-        return questionRepository.findRandomQuestions(limit);
+    public List<Question> getRandomQuestionsByTest(Integer idTest, int limit) {
+
+        Test test = testRepository.findById(idTest).orElseThrow(TestNotFoundException::new);
+
+        return questionRepository.findRandomQuestionsByTest(idTest, limit);
     }
 
-    public List<Question> getRandomTenQuestions() {
-        return getRandomQuestions(10);
+    public List<Question> getRandomTenQuestions(Integer idTest) {
+        return getRandomQuestionsByTest(idTest,10);
     }
 }
