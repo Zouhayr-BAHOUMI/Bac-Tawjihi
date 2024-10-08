@@ -1,7 +1,7 @@
 package tawjih.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,13 +17,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/home")
+@RequiredArgsConstructor
 public class HomeController {
 
-    @Autowired
-    private  PackService packService;
 
-    @Autowired
-    private TestService testService;
+    private final PackService packService;
+
+    private final TestService testService;
 
     @GetMapping("/packs/{idPack}")
     public ResponseEntity<Pack> getPackWithFilieres(@PathVariable Integer idPack) {
