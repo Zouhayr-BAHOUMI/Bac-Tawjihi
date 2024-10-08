@@ -11,7 +11,6 @@ import tawjih.model.Universite;
 import tawjih.repository.UniversiteRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class UniversiteService {

@@ -53,47 +53,6 @@ public class EtablissementService {
 
         etablissement.setUniversite(universite);
         return etablissementRepository.save(etablissement);
-
-//        Adresse etablissementAdresse = etablissement.getAdresse();
-//
-//
-//        Adresse existingAdresse = adresseRepository.findByRegionAndProvinceAndVille(
-//                etablissementAdresse.getRegion(),
-//                etablissementAdresse.getProvince(),
-//                etablissementAdresse.getVille());
-//
-//        if (existingAdresse == null) {
-//
-//            existingAdresse = new Adresse();
-//            existingAdresse.setRegion(etablissementAdresse.getRegion());
-//            existingAdresse.setProvince(etablissementAdresse.getProvince());
-//            existingAdresse.setVille(etablissementAdresse.getVille());
-//            adresseRepository.save(existingAdresse);
-//        }
-//
-//        etablissement.setAdresse(existingAdresse);
-//        etablissement.setUniversite(universite);
-//
-//        return etablissementRepository.save(etablissement);
-//        Adresse universiteAdresse = universite.getAdresse();
-//        if (universiteAdresse == null) {
-//            throw new RuntimeException("University address not found");
-//        }
-//
-//        if (universiteAdresse.getVille() == null && etablissement.getAdresse() != null) {
-//            universiteAdresse.setVille(etablissement.getAdresse().getVille());
-//        }
-//
-//        if (universiteAdresse.getProvince() == null && etablissement.getAdresse() != null) {
-//            universiteAdresse.setProvince(etablissement.getAdresse().getProvince());
-//        }
-
-//        adresseRepository.save(universiteAdresse);
-//
-//        etablissement.setAdresse(universiteAdresse);
-//        etablissement.setUniversite(universite);
-//
-//        return etablissementRepository.save(etablissement);
     }
 
     public List<Etablissement> getAllEtablissements() {
