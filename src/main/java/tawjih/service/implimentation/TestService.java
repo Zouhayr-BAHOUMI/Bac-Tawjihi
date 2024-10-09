@@ -67,6 +67,10 @@ public class TestService {
             Test test = testOptional.get();
             Etudiant etudiant = etudiantOptional.get();
 
+            if (etudiant.getTests().contains(test)) {
+                return test;
+            }
+
             etudiant.getTests().add(test);
             test.getEtudiants().add(etudiant);
 

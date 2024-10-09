@@ -91,7 +91,7 @@ public class EtudiantService {
 
         etudiant.setPack(packChoisi);
 
-        packChoisi.setStatusPack(StatusPack.PAYE);
+        packChoisi.setStatusPack(StatusPack.IMPAYE);
 
         packRepository.save(packChoisi);
 
