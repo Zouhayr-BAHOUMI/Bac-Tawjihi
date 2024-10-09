@@ -2,6 +2,7 @@ package tawjih.service.implimentation;
 
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tawjih.enums.Domain;
@@ -18,7 +19,7 @@ import tawjih.repository.TestRepository;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TestService {
 
     @Autowired
