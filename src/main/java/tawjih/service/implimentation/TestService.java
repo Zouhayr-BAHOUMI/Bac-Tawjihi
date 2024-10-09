@@ -1,23 +1,30 @@
 package tawjih.service.implimentation;
 
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tawjih.enums.Domain;
+import tawjih.exception.ChoixNotFoundException;
 import tawjih.exception.TestNotFoundException;
+import tawjih.model.Choix;
 import tawjih.model.Etudiant;
+import tawjih.model.Question;
 import tawjih.model.Test;
+import tawjih.repository.ChoixRepository;
 import tawjih.repository.EtudiantRepository;
 import tawjih.repository.TestRepository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class TestService {
 
     @Autowired
     private TestRepository testRepository;
+
+    private final ChoixRepository choixRepository;
 
     @Autowired
     private EtudiantRepository etudiantRepository;
@@ -104,5 +111,34 @@ public class TestService {
                 .orElseThrow(TestNotFoundException::new);
 
         testRepository.delete(testSupprime);
+    }
+
+    public String evaluateTest(List<Integer> idChoixChoisi) {
+
+        Map<Domain, Integer> correctReponse = new HashMap<>();
+        int totalCorrectChoisi = 0;
+
+        for (Integer idChoix : idChoixChoisi) {
+
+            Choix selectChoix = choixRepository.findById(idChoix)
+                    .orElseThrow(ChoixNotFoundException::new);
+
+            Question question = selectChoix.getQuestion();
+
+            if(selectChoix.isCorrect()){
+                totalCorrectChoisi ++;
+                Domain domain = question.getDomain();
+                correctReponse .put(domain, correctReponse.getOrDefault(domain, 0) + 1);
+            }
+        }
+
+        Domain recommendedDomain = correctReponse
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+
+        return  recommendedDomain != null ? "Recommended Domain: " + recommendedDomain : "No recommendation available.";
     }
 }
