@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import tawjih.enums.StatusPack;
 import tawjih.model.Etudiant;
 import tawjih.model.Pack;
 import tawjih.model.Recu;
@@ -50,6 +51,10 @@ public class StripeService {
         recu.setStatus(paymentIntent.getStatus());
         recu.setPaymentDate(LocalDate.now());
         recu.setAmountPaid(paymentIntent.getAmount()/100.0);
+
+        if ("succeeded".equals(paymentIntent.getStatus())) {
+            pack.setStatusPack(StatusPack.PAYE);
+        }
 
         return recuRepository.save(recu);
     }

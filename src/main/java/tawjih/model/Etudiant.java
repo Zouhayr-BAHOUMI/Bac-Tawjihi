@@ -2,7 +2,6 @@ package tawjih.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,7 +59,12 @@ public class Etudiant extends Personne{
     private Pack pack;
 
 
-    @OneToMany(mappedBy = "etudiant")
+    @ManyToMany
+    @JoinTable(
+            name = "etudiant_test",
+            joinColumns = @JoinColumn(name = "id_etudiant"),
+            inverseJoinColumns = @JoinColumn(name = "id_test")
+    )
     @JsonIgnoreProperties("etudiants")
     private List<Test> tests;
 

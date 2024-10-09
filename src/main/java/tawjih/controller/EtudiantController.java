@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tawjih.model.Etudiant;
-import tawjih.model.Pack;
 import tawjih.service.implimentation.EtudiantService;
 
 import java.util.HashMap;

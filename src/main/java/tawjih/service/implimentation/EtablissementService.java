@@ -26,31 +26,54 @@ public class EtablissementService {
     private AdresseRepository adresseRepository;
 
     public Etablissement addEtablissement(Etablissement etablissement, Long idUniversite){
-         Universite universite = universiteRepository
+        Universite universite = universiteRepository
                 .findById(idUniversite)
                 .orElseThrow(UniversiteNotFoundException::new);
-
         Adresse universiteAdresse = universite.getAdresse();
-        if (universiteAdresse == null) {
+        if (universiteAdresse == null || universiteAdresse.getRegion() == null) {
             throw new UniversiteNotFoundException();
         }
 
-        if (universiteAdresse.getRegion() != null) {
-            etablissement.getAdresse().setRegion(universiteAdresse.getRegion());
+        // Set the region from the university's address
+        etablissement.getAdresse().setRegion(universiteAdresse.getRegion());
+
+        // Try to find an existing address or create a new one
+        Adresse adresseToUse = null;
+
+        // First, try to find an exact match
+        Adresse exactMatch = adresseRepository.findByRegionAndProvinceAndVille(
+                etablissement.getAdresse().getRegion(),
+                etablissement.getAdresse().getProvince(),
+                etablissement.getAdresse().getVille()
+
+        );
+        if (exactMatch != null) {
+            adresseToUse = exactMatch;
         } else {
-            throw new UniversiteNotFoundException();
+            // If no exact match, look for a partial match that we can update
+            List<Adresse> partialMatches = adresseRepository.findByRegion(etablissement.getAdresse().getRegion());
+            for (Adresse partialMatch : partialMatches) {
+                if ((partialMatch.getProvince() == null && etablissement.getAdresse().getProvince() != null) ||
+                        (partialMatch.getVille() == null && etablissement.getAdresse().getVille() != null)) {
+                    // Update the partial match
+                    if (partialMatch.getProvince() == null) {
+                        partialMatch.setProvince(etablissement.getAdresse().getProvince());
+                    }
+                    if (partialMatch.getVille() == null) {
+                        partialMatch.setVille(etablissement.getAdresse().getVille());
+                    }
+                    adresseToUse = adresseRepository.save(partialMatch);
+                    break;
+                }
+            }
         }
 
-        if (etablissement.getAdresse().getVille() == null) {
-            etablissement.getAdresse().setVille(universiteAdresse.getVille());
-        }
-        if (etablissement.getAdresse().getProvince() == null) {
-            etablissement.getAdresse().setProvince(universiteAdresse.getProvince());
+        // If no suitable address found, create a new one
+        if (adresseToUse == null) {
+            adresseToUse = adresseRepository.save(etablissement.getAdresse());
         }
 
-
-        adresseRepository.save(etablissement.getAdresse());
-
+        etablissement.setAdresse(adresseToUse);
         etablissement.setUniversite(universite);
         return etablissementRepository.save(etablissement);
 

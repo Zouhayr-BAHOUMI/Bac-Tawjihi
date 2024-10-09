@@ -9,7 +9,6 @@ import tawjih.model.Pack;
 import tawjih.repository.PackRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class PackService {

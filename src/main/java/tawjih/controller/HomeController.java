@@ -1,24 +1,29 @@
 package tawjih.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import tawjih.model.Etudiant;
 import tawjih.model.Pack;
+import tawjih.model.Test;
 import tawjih.service.implimentation.PackService;
+import tawjih.service.implimentation.TestService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/home")
+@RequiredArgsConstructor
 public class HomeController {
 
-    @Autowired
-    private  PackService packService;
+
+    private final PackService packService;
+
+    private final TestService testService;
 
     @GetMapping("/packs/{idPack}")
     public ResponseEntity<Pack> getPackWithFilieres(@PathVariable Integer idPack) {
@@ -37,6 +42,23 @@ public class HomeController {
             return ResponseEntity.ok(packs);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/test/random-test")
+    public ResponseEntity<Test> getRandomTest() {
+        Optional<Test> randomTest = testService.getRandomTest();
+        return randomTest.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/test/{idTest}/assign")
+    public ResponseEntity<String> assignTestToEtudiant(@PathVariable Integer idTest, @AuthenticationPrincipal Etudiant etudiant) {
+        try {
+            testService.assignTestToEtudiant(idTest, etudiant.getId());
+            return ResponseEntity.ok("Test assigned to Etudiant successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

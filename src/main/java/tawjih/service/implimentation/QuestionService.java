@@ -55,10 +55,10 @@ public class QuestionService {
 
     public Question getQuestion(Integer idQuestion) {
 
-        Question question = questionRepository
+        return questionRepository
                 .findById(idQuestion)
                 .orElseThrow(QuestionNotFoundException::new);
-        return question;
+
     }
 
     public void updateQuestion(Integer idQuestion, Question question) {
@@ -95,5 +95,16 @@ public class QuestionService {
         if (question.getChoix() == null && question.getChoix().isEmpty()){
             throw new IllegalArgumentException("Question choix is null or empty");
         }
+    }
+
+    public List<Question> getRandomQuestionsByTest(Integer idTest, int limit) {
+
+        Test test = testRepository.findById(idTest).orElseThrow(TestNotFoundException::new);
+
+        return questionRepository.findRandomQuestionsByTest(idTest, limit);
+    }
+
+    public List<Question> getRandomTenQuestions(Integer idTest) {
+        return getRandomQuestionsByTest(idTest,10);
     }
 }

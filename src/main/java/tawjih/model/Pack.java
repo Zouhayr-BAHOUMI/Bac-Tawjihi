@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tawjih.enums.PackFiliere;
 import tawjih.enums.StatusPack;
-import tawjih.enums.TypeEtablissement;
 import tawjih.enums.TypePack;
 
 import java.time.LocalDate;
