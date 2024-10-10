@@ -1,7 +1,6 @@
 package tawjih.controller;
 
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +51,7 @@ public class EtudiantController {
 
     }
 
-    @PostMapping("/submit")
+    @PostMapping("/test/submit")
     public ResponseEntity<String> submitTestAnswers(@RequestBody List<Integer> idChoixChoisi) {
         String recommendation = testService.evaluateTest(idChoixChoisi);
         return ResponseEntity.ok(recommendation);
