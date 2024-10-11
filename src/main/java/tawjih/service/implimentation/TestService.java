@@ -1,9 +1,7 @@
 package tawjih.service.implimentation;
 
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tawjih.enums.Domain;
 import tawjih.exception.ChoixNotFoundException;
@@ -22,13 +20,12 @@ import java.util.*;
 @RequiredArgsConstructor
 public class TestService {
 
-    @Autowired
-    private TestRepository testRepository;
+
+    private final TestRepository testRepository;
 
     private final ChoixRepository choixRepository;
 
-    @Autowired
-    private EtudiantRepository etudiantRepository;
+    private final EtudiantRepository etudiantRepository;
 
     public void addTest(Test test){
 

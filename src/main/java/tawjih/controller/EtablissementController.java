@@ -1,7 +1,7 @@
 package tawjih.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/gestion-etablissements")
+@RequiredArgsConstructor
 public class EtablissementController {
 
-
-    @Autowired
-    private EtablissementService etablissementService;
+    private final EtablissementService etablissementService;
 
     @PostMapping("/add/{idUniversite}")
     public ResponseEntity<String> ajouterEtablissement(@RequestBody Etablissement etablissement, @PathVariable Long idUniversite) {

@@ -1,7 +1,7 @@
 package tawjih.service.implimentation;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tawjih.exception.QuestionNotFoundException;
 import tawjih.exception.TestNotFoundException;
@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class QuestionService {
 
-    @Autowired
-    private QuestionRepository questionRepository;
-    @Autowired
-    private TestRepository testRepository;
+    private final QuestionRepository questionRepository;
+
+    private final TestRepository testRepository;
 
     public void addQuestion(Question question, Integer idTest){
 

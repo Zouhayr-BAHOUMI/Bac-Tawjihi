@@ -3,7 +3,7 @@ package tawjih.controller;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +23,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/etudiant/paiments")
+@RequiredArgsConstructor
 public class PaimentController {
 
+    private final StripeService stripeService;
 
-    @Autowired
-    private StripeService stripeService;
+    private final EtudiantService etudiantService;
 
-    @Autowired
-    private EtudiantService etudiantService;
-
-    @Autowired
-    private PackService packService;
+    private final PackService packService;
 
     @PostMapping("/create-payment")
     public ResponseEntity<Map<String, String>> createPaymentIntent(@RequestBody PaymentRequestDto paymentRequest) {

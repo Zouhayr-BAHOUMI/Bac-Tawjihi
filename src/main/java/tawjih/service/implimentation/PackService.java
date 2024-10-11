@@ -1,7 +1,7 @@
 package tawjih.service.implimentation;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tawjih.enums.StatusPack;
 import tawjih.exception.PackNotFoundException;
@@ -11,10 +11,10 @@ import tawjih.repository.PackRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PackService {
 
-    @Autowired
-    private PackRepository packRepository;
+    private final PackRepository packRepository;
 
     public void addPack(Pack pack){
         System.out.println(pack);

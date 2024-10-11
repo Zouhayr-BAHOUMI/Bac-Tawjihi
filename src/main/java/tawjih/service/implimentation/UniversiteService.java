@@ -1,7 +1,7 @@
 package tawjih.service.implimentation;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tawjih.dto.UniversiteDto;
 import tawjih.exception.UniversiteNotFoundException;
@@ -13,13 +13,12 @@ import tawjih.repository.UniversiteRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UniversiteService {
 
-    @Autowired
-    private UniversiteRepository universiteRepository;
+    private final UniversiteRepository universiteRepository;
 
-    @Autowired
-    private UniversiteMapper universiteMapper;
+    private final UniversiteMapper universiteMapper;
 
     public UniversiteDto addUniversite(UniversiteDto universiteDTO) {
         Universite universite = universiteMapper.toEntity(universiteDTO);
