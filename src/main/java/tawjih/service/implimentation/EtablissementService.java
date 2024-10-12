@@ -1,7 +1,9 @@
 package tawjih.service.implimentation;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import tawjih.enums.TypeEtablissement;
 import tawjih.exception.EtablissementNotFoundException;
 import tawjih.exception.UniversiteNotFoundException;
 import tawjih.model.Adresse;
@@ -161,6 +163,11 @@ public class EtablissementService {
         Universite universite = universiteRepository.findById(idUniversite)
                 .orElseThrow(UniversiteNotFoundException::new);
         return etablissementRepository.findByUniversite(universite);
+    }
+
+    @Transactional
+    public List<Etablissement> getEtablissementsByType(TypeEtablissement type) {
+        return etablissementRepository.findByTypeEtablissement(type);
     }
 
 
