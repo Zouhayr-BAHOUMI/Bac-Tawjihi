@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tawjih.dto.UniversiteDto;
+import tawjih.enums.TypeEtablissement;
 import tawjih.model.*;
 import tawjih.service.implimentation.EtablissementService;
 import tawjih.service.implimentation.PackService;
@@ -83,5 +84,18 @@ public class HomeController {
     @GetMapping("/universite/{idUniversite}")
     public List<Etablissement> getEtablissementsByUniversite(@PathVariable Long idUniversite) {
         return etablissementService.getEtablissementsByUniversite(idUniversite);
+    }
+
+    @GetMapping("/type/{typeEtablissement}")
+    public ResponseEntity<List<Etablissement>> getEtablissementsByType(
+            @PathVariable("typeEtablissement") TypeEtablissement typeEtablissement) {
+        List<Etablissement> etablissements = etablissementService.getEtablissementsByType(typeEtablissement);
+        return ResponseEntity.ok(etablissements);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Etablissement>> searchEtablissements(@RequestParam("query") String query) {
+        List<Etablissement> etablissements = etablissementService.searchEtablissements(query);
+        return new ResponseEntity<>(etablissements, HttpStatus.OK);
     }
 }

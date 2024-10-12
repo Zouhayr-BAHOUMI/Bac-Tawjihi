@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tawjih.enums.TypeEtablissement;
 import tawjih.model.Etablissement;
 import tawjih.service.implimentation.EtablissementService;
 
@@ -57,10 +56,5 @@ public class EtablissementController {
         return etablissementService.getEtablissementsByUniversite(idUniversite);
     }
 
-    @GetMapping("/type/{typeEtablissement}")
-    public ResponseEntity<List<Etablissement>> getEtablissementsByType(
-            @PathVariable("typeEtablissement") TypeEtablissement typeEtablissement) {
-        List<Etablissement> etablissements = etablissementService.getEtablissementsByType(typeEtablissement);
-        return ResponseEntity.ok(etablissements);
-    }
+
 }

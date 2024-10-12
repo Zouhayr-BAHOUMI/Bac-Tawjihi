@@ -11,4 +11,6 @@ public interface EtablissementRepository extends JpaRepository<Etablissement, In
     List<Etablissement> findByUniversite(Universite universite);
 
     List<Etablissement> findByTypeEtablissement(TypeEtablissement type);
+
+    List<Etablissement> findByNomEtablissementContainingIgnoreCase(String nomEtablissement);
 }

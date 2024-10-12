@@ -171,4 +171,7 @@ public class EtablissementService {
     }
 
 
+    public List<Etablissement> searchEtablissements(String query) {
+        return etablissementRepository.findByNomEtablissementContainingIgnoreCase(query);
+    }
 }
