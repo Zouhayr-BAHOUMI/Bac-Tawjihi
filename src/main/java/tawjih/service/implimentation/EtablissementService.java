@@ -1,6 +1,6 @@
 package tawjih.service.implimentation;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tawjih.exception.EtablissementNotFoundException;
 import tawjih.exception.UniversiteNotFoundException;
@@ -14,16 +14,15 @@ import tawjih.repository.UniversiteRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EtablissementService {
 
-    @Autowired
-    private EtablissementRepository etablissementRepository;
 
-    @Autowired
-    private UniversiteRepository universiteRepository;
+    private final EtablissementRepository etablissementRepository;
 
-    @Autowired
-    private AdresseRepository adresseRepository;
+    private final UniversiteRepository universiteRepository;
+
+    private final AdresseRepository adresseRepository;
 
     public Etablissement addEtablissement(Etablissement etablissement, Long idUniversite){
         Universite universite = universiteRepository
@@ -34,13 +33,10 @@ public class EtablissementService {
             throw new UniversiteNotFoundException();
         }
 
-        // Set the region from the university's address
         etablissement.getAdresse().setRegion(universiteAdresse.getRegion());
 
-        // Try to find an existing address or create a new one
         Adresse adresseToUse = null;
 
-        // First, try to find an exact match
         Adresse exactMatch = adresseRepository.findByRegionAndProvinceAndVille(
                 etablissement.getAdresse().getRegion(),
                 etablissement.getAdresse().getProvince(),
@@ -50,12 +46,12 @@ public class EtablissementService {
         if (exactMatch != null) {
             adresseToUse = exactMatch;
         } else {
-            // If no exact match, look for a partial match that we can update
+
             List<Adresse> partialMatches = adresseRepository.findByRegion(etablissement.getAdresse().getRegion());
             for (Adresse partialMatch : partialMatches) {
                 if ((partialMatch.getProvince() == null && etablissement.getAdresse().getProvince() != null) ||
                         (partialMatch.getVille() == null && etablissement.getAdresse().getVille() != null)) {
-                    // Update the partial match
+
                     if (partialMatch.getProvince() == null) {
                         partialMatch.setProvince(etablissement.getAdresse().getProvince());
                     }

@@ -1,7 +1,7 @@
 package tawjih.service.implimentation;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tawjih.enums.StatusPack;
 import tawjih.exception.EtudiantNotFoundException;
@@ -16,16 +16,14 @@ import tawjih.repository.PackRepository;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EtudiantService {
 
-    @Autowired
-    private EtudiantRepository etudiantRepository;
+    private final EtudiantRepository etudiantRepository;
 
-    @Autowired
-    private AdresseRepository adresseRepository;
+    private final AdresseRepository adresseRepository;
 
-    @Autowired
-    private PackRepository packRepository;
+    private final PackRepository packRepository;
 
     public Etudiant getEtudiant(Integer idEtudiant) {
 

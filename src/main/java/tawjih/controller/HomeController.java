@@ -6,11 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import tawjih.model.Etudiant;
-import tawjih.model.Pack;
-import tawjih.model.Test;
+import tawjih.dto.UniversiteDto;
+import tawjih.model.*;
+import tawjih.service.implimentation.EtablissementService;
 import tawjih.service.implimentation.PackService;
 import tawjih.service.implimentation.TestService;
+import tawjih.service.implimentation.UniversiteService;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,10 @@ public class HomeController {
     private final PackService packService;
 
     private final TestService testService;
+
+    private final EtablissementService etablissementService;
+
+    private final UniversiteService universiteService;
 
     @GetMapping("/packs/{idPack}")
     public ResponseEntity<Pack> getPackWithFilieres(@PathVariable Integer idPack) {
@@ -60,5 +65,23 @@ public class HomeController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+
+    @GetMapping("/etablissements")
+    public List<Etablissement> getAllEtablissements() {
+
+        return etablissementService.getAllEtablissements();
+    }
+
+    @GetMapping("/universities")
+    public List<Universite> getAllUniversities() {
+
+        return universiteService.getAllUniversites();
+    }
+
+    @GetMapping("/universite/{idUniversite}")
+    public List<Etablissement> getEtablissementsByUniversite(@PathVariable Long idUniversite) {
+        return etablissementService.getEtablissementsByUniversite(idUniversite);
     }
 }

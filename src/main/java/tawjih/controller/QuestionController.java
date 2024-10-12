@@ -1,7 +1,7 @@
 package tawjih.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/gestion-questions")
+@RequiredArgsConstructor
 public class QuestionController {
 
-    @Autowired
-    private QuestionService questionService;
+
+    private final QuestionService questionService;
 
     @PostMapping("/add")
     public ResponseEntity<?> ajouterQuestion( @RequestParam Integer idTest ,@RequestBody Question question){

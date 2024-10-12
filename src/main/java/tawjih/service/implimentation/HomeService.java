@@ -1,7 +1,7 @@
 package tawjih.service.implimentation;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tawjih.model.Pack;
 import tawjih.repository.PackRepository;
@@ -9,10 +9,11 @@ import tawjih.repository.PackRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class HomeService {
 
-    @Autowired
-    private PackRepository packRepository;
+
+    private final PackRepository packRepository;
 
     @Transactional
     public Pack getPackWithFilieres(Integer idPack) {

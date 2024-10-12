@@ -1,22 +1,26 @@
 package tawjih.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tawjih.model.Etudiant;
 import tawjih.service.implimentation.EtudiantService;
+import tawjih.service.implimentation.TestService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/etudiant")
+@RequiredArgsConstructor
 public class EtudiantController {
 
-    @Autowired
-    private EtudiantService etudiantService;
+    private final EtudiantService etudiantService;
+
+    private final TestService testService;
 
     @GetMapping("/profile")
     public Etudiant showsEtudiantById(@AuthenticationPrincipal Etudiant etudiant){
@@ -43,5 +47,11 @@ public class EtudiantController {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    @PostMapping("/test/submit")
+    public ResponseEntity<String> submitTestAnswers(@RequestBody List<Integer> idChoixChoisi) {
+        String recommendation = testService.evaluateTest(idChoixChoisi);
+        return ResponseEntity.ok(recommendation);
     }
 }
