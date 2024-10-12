@@ -2,6 +2,7 @@ package tawjih.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -73,6 +74,13 @@ public class HomeController {
     public List<Etablissement> getAllEtablissements() {
 
         return etablissementService.getAllEtablissements();
+    }
+
+    @GetMapping("/etablissement")
+    public Page<Etablissement> getAllEtablissementsPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        return etablissementService.getAllEtablissementsPagination(page, size);
     }
 
     @GetMapping("/universities")

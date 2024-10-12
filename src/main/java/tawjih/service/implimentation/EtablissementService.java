@@ -2,6 +2,9 @@ package tawjih.service.implimentation;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tawjih.enums.TypeEtablissement;
 import tawjih.exception.EtablissementNotFoundException;
@@ -120,6 +123,11 @@ public class EtablissementService {
     public List<Etablissement> getAllEtablissements() {
 
         return etablissementRepository.findAll();
+    }
+
+    public Page<Etablissement> getAllEtablissementsPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return etablissementRepository.findAll(pageable);
     }
 
     public Etablissement getEtablissement(Integer idEtablissement) {
