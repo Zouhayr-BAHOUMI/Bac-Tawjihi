@@ -81,6 +81,13 @@ public class HomeController {
         return universiteService.getAllUniversites();
     }
 
+
+    @GetMapping("/idEtablissement")
+    public Etablissement showsEtablissementById(@RequestParam Integer idEtablissement){
+        Etablissement etablissementFound = etablissementService.getEtablissement(idEtablissement);
+        return etablissementFound;
+    }
+
     @GetMapping("/universite/{idUniversite}")
     public List<Etablissement> getEtablissementsByUniversite(@PathVariable Long idUniversite) {
         return etablissementService.getEtablissementsByUniversite(idUniversite);
