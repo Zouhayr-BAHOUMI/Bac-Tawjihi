@@ -46,13 +46,18 @@ public class PaimentController {
     }
 
     @PostMapping("/confirm-payment")
-    public ResponseEntity<Recu> confirmPayment(@RequestBody PaymentConfirmationDto confirmationDto) {
+    public ResponseEntity<?> confirmPayment(@RequestBody PaymentConfirmationDto confirmationDto) {
         try {
-            System.out.println  ( confirmationDto);
             PaymentIntent paymentIntent = stripeService.confirmPayment(confirmationDto.getPaymentIntentId());
 
             Etudiant etudiant = etudiantService.getEtudiant(confirmationDto.getEtudiantId());
             Pack pack = packService.getPack(confirmationDto.getPackId());
+
+            boolean hasAlreadyPaid = stripeService.hasEtudiantAlreadyPaid(etudiant, pack);
+            if (hasAlreadyPaid) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body(Map.of("message", "L'étudiant a déjà payé pour ce pack."));
+            }
 
             Recu recu = stripeService.savePaimentsDetails(etudiant, pack, paymentIntent);
             return ResponseEntity.ok(recu);

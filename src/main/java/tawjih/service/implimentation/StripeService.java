@@ -64,4 +64,8 @@ public class StripeService {
         PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
         return paymentIntent;
     }
+
+    public boolean hasEtudiantAlreadyPaid(Etudiant etudiant, Pack pack) {
+        return recuRepository.existsByEtudiantAndPack(etudiant, pack);
+    }
 }
