@@ -1,7 +1,12 @@
 package tawjih.service.implimentation;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import tawjih.enums.TypeEtablissement;
 import tawjih.exception.EtablissementNotFoundException;
 import tawjih.exception.UniversiteNotFoundException;
 import tawjih.model.Adresse;
@@ -120,6 +125,11 @@ public class EtablissementService {
         return etablissementRepository.findAll();
     }
 
+    public Page<Etablissement> getAllEtablissementsPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return etablissementRepository.findAll(pageable);
+    }
+
     public Etablissement getEtablissement(Integer idEtablissement) {
 
         Etablissement etablissement = etablissementRepository
@@ -163,5 +173,13 @@ public class EtablissementService {
         return etablissementRepository.findByUniversite(universite);
     }
 
+    @Transactional
+    public List<Etablissement> getEtablissementsByType(TypeEtablissement type) {
+        return etablissementRepository.findByTypeEtablissement(type);
+    }
 
+
+    public List<Etablissement> searchEtablissements(String query) {
+        return etablissementRepository.findByNomEtablissementContainingIgnoreCase(query);
+    }
 }

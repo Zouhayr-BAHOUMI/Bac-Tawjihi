@@ -2,11 +2,13 @@ package tawjih.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tawjih.dto.UniversiteDto;
+import tawjih.enums.TypeEtablissement;
 import tawjih.model.*;
 import tawjih.service.implimentation.EtablissementService;
 import tawjih.service.implimentation.PackService;
@@ -74,14 +76,41 @@ public class HomeController {
         return etablissementService.getAllEtablissements();
     }
 
+    @GetMapping("/etablissement")
+    public Page<Etablissement> getAllEtablissementsPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        return etablissementService.getAllEtablissementsPagination(page, size);
+    }
+
     @GetMapping("/universities")
     public List<Universite> getAllUniversities() {
 
         return universiteService.getAllUniversites();
     }
 
+
+    @GetMapping("/idEtablissement")
+    public Etablissement showsEtablissementById(@RequestParam Integer idEtablissement){
+        Etablissement etablissementFound = etablissementService.getEtablissement(idEtablissement);
+        return etablissementFound;
+    }
+
     @GetMapping("/universite/{idUniversite}")
     public List<Etablissement> getEtablissementsByUniversite(@PathVariable Long idUniversite) {
         return etablissementService.getEtablissementsByUniversite(idUniversite);
+    }
+
+    @GetMapping("/type/{typeEtablissement}")
+    public ResponseEntity<List<Etablissement>> getEtablissementsByType(
+            @PathVariable("typeEtablissement") TypeEtablissement typeEtablissement) {
+        List<Etablissement> etablissements = etablissementService.getEtablissementsByType(typeEtablissement);
+        return ResponseEntity.ok(etablissements);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Etablissement>> searchEtablissements(@RequestParam("query") String query) {
+        List<Etablissement> etablissements = etablissementService.searchEtablissements(query);
+        return new ResponseEntity<>(etablissements, HttpStatus.OK);
     }
 }

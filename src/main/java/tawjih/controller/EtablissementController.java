@@ -55,4 +55,6 @@ public class EtablissementController {
     public List<Etablissement> getEtablissementsByUniversite(@PathVariable Long idUniversite) {
         return etablissementService.getEtablissementsByUniversite(idUniversite);
     }
+
+
 }
